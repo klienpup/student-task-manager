@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Task Manager - Firebase</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Loading Spinner -->
+        <div id="loadingSpinner" class="loading" style="display: none;">
+            <div class="spinner"></div>
+            <p>Loading...</p>
+        </div>
+
+        <!-- Authentication Section -->
+        <div id="authSection" class="auth-container">
+            <div class="header">
+                <h1>📚 Student Task Manager</h1>
+                <p>Organize your academic life with Firebase</p>
+            </div>
+            
+            <!-- Login Form -->
+            <div id="loginForm">
+                <h2>Login</h2>
+                <form id="loginFormElement">
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+                <div class="auth-links">
+                    <p>Don't have an account? <a href="#" onclick="showRegister()">Register here</a></p>
+                    <button id="googleLoginBtn" class="btn btn-secondary">🔐 Login with Google</button>
+                </div>
+            </div>
+
+            <!-- Register Form -->
+            <div id="registerForm" style="display: none;">
+                <h2>Create Account</h2>
+                <form id="registerFormElement">
+                    <div class="form-group">
+                        <label for="registerEmail">Email</label>
+                        <input type="email" id="registerEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Password</label>
+                        <input type="password" id="registerPassword" required minlength="6">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </form>
+                <div class="auth-links">
+                    <p>Already have an account? <a href="#" onclick="showLogin()">Login here</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div id="dashboard" class="dashboard" style="display: none;">
+            <div class="header">
+                <h1>📚 My Tasks</h1>
+            </div>
+            
+            <div class="user-info">
+                <div>
+                    <strong>Welcome, <span id="userName"></span>!</strong>
+                    <span id="userEmail" style="color: #666; font-size: 0.9em;"></span>
+                </div>
+                <button class="btn btn-secondary logout-btn" id="logoutBtn">Logout</button>
+            </div>
+
+            <!-- Task Form -->
+            <div class="task-form">
+                <div class="task-input-group">
+                    <input type="text" id="taskTitle" placeholder="Enter task title (e.g., Math homework)">
+                    <input type="date" id="taskDueDate">
+                    <select id="taskPriority" class="priority-select">
+                        <option value="">Priority</option>
+                        <option value="high">🔴 High</option>
+                        <option value="medium">🟡 Medium</option>
+                        <option value="low">🟢 Low</option>
+                    </select>
+                    <button class="btn btn-primary add-task-btn" onclick="addTask()">Add Task</button>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalTasks">0</div>
+                    <div>Total Tasks</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="pendingTasks">0</div>
+                    <div>Pending</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="completedTasks">0</div>
+                    <div>Completed</div>
+                </div>
+            </div>
+
+            <!-- Tasks List -->
+            <ul id="tasksList" class="tasks-list"></ul>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
